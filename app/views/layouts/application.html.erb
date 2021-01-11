@@ -30,7 +30,7 @@
     </ul>
   </div>
 </nav>
-<div id="flash_msg">
+<div class="container-fluid" id="flash_msg">
   <% flash.each do |key, value| %>
     <% if key == "alert" %>
       <%= content_tag(:div, value, class: "alert alert-danger") %>

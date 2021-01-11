@@ -9,6 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "bootstrap"
 import "../stylesheets/application";
+import "./time_clock"
 
 Rails.start()
 Turbolinks.start()
@@ -21,3 +22,7 @@ document.addEventListener("turbolinks:load", function() {
         $('[data-toggle="popover"]').popover()
     })
 })
+
+setTimeout(function () {
+    $('#flash_msg').slideUp('slow')
+}, 3000)

@@ -22,6 +22,20 @@ class UsersController < ApplicationController
   def show
   end
 
+  def track_user
+    user = User.find_by(tracker_id: params[:tracker_id])
+    if user.present?
+      time_count = user.time_counts.find_by(active: true)
+      if time_count.present?
+        render json: { success: true }
+      else
+        render json: { success: false }
+      end
+    else
+      render json: { success: false }
+    end
+  end
+
   private
 
   def set_user
