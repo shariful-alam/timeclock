@@ -16,13 +16,15 @@ class TimeCountsController < ApplicationController
           render :new
         end
       elsif params[:commit] === 'Punch Out'
-        @time_count = @user.time_counts.find_by(active: true)
+        @time_count = @user.time_counts.last
         total_time = ((DateTime.now - @time_count.punch_in_time.to_datetime) * 24 * 60 * 60).to_i
         if @time_count.update(punch_out_time: DateTime.now, total_time: total_time, active: false)
           redirect_to time_count_path(@time_count), notice: 'Time tracking has been ended.'
         else
           render :new
         end
+      elsif params[:commit] === 'See Log'
+        redirect_to time_count_path(@user.time_counts.last)
       end
     else
       redirect_to new_time_count_path, alert: 'Worker not found!!'
@@ -31,6 +33,10 @@ class TimeCountsController < ApplicationController
 
   def show
     @time_count = TimeCount.find(params[:id])
+    @total_time_worked = @time_count.user.time_counts.sum(:total_time)
+  end
+
+  def see_log
   end
 
   private

@@ -2,9 +2,10 @@
   <div class="card-header">
     <h1>Hello <%= @time_count.user.name %></h1>
     <% if @time_count.active %>
-      <h3>Your current logged time is <%= converted_time(((DateTime.now - @time_count.punch_in_time.to_datetime) * 24 * 60 * 60).to_i) %></h3>
-    <% else %>
-      <h3>Your were logged in for <%= converted_time(((@time_count.punch_out_time.to_datetime - @time_count.punch_in_time.to_datetime) * 24 * 60 * 60).to_i) %></h3>
+      <h3>Your current logged time is <%= converted_time(((DateTime.now - @time_count.punch_in_time.to_datetime) * 24 * 60 * 60).to_i) %>.</h3>
+      <h3>Your have been logged in for <%= converted_time(@total_time_worked) %> in total.</h3>
+  <% else %>
+      <h3>Your were logged in for <%= converted_time(@total_time_worked) %> in total.</h3>
     <% end %>
   </div>
 </div>

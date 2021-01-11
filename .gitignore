@@ -33,7 +33,8 @@
 /public/dev-assets/*
 /public/uploaded/*
 /spec/tmp/*
-/tmp
+/tmp/*
+/log/*
 /cache
 /capybara*
 /capybara-*.html
