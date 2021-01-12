@@ -1,4 +1,5 @@
 $(document).on('ready turbolinks:load', function() {
+
     $('#tracker_id').on('keyup', function () {
         let trk_id = $(this).val();
         let button = $('#punch_button')
@@ -23,4 +24,6 @@ $(document).on('ready turbolinks:load', function() {
             },
         })
     });
+
+
 });
