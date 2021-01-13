@@ -19,6 +19,7 @@ Copy the sample database.yml file and edit the database configuration as require
 ```
 cp config/database.yml.sample config/database.yml
 ```
+After that edit the database configuration as required.
 
 ### Install the app
 Now run the following commands to run the project locally:
@@ -31,3 +32,7 @@ rails s
 ```
 
 And now you can visit the site with the URL http://localhost:3000
+
+### Live Demo
+The project is hosted on Heroku Cloud Server. The url to access the live demo is:
+[TimeClock](http://concept-time-tracker.herokuapp.com/)
