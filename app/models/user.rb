@@ -3,6 +3,9 @@ class User < ApplicationRecord
 
   after_create :generate_tracker_id
 
+  validates :name, presence: true
+  validates :date_of_birth, presence: true
+
   private
 
   def generate_tracker_id
