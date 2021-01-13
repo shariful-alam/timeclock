@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-6">
+        <%= form_with url: time_counts_path, method: :post do |form| %>
+          <div class="form-group">
+            <%= form.label 'Tracker ID', class: 'control-label' %>
+            <% if @is_active %>
+              <%= form.text_field :tracker_id, value: session[:tracker_id], class: 'form-control', id: 'tracker_id' %>
+            <% else %>
+              <%= form.text_field :tracker_id, class: 'form-control', id: 'tracker_id' %>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <% if @is_active %>
+              <%= form.submit 'Punch Out', class: 'btn btn-success', id: 'punch_button' %>
+            <% else %>
+              <%= form.submit 'Punch In', class: 'btn btn-success', id: 'punch_button' %>
+            <% end %>
+            <%= link_to 'Back', root_path, class: 'btn btn-dark' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if @is_active %>
+    <div class="card-body">
+      <div class="col-12">
+        <h5>Your current logged time is
+          <strong><%= converted_time(((DateTime.now - @time_count.punch_in_time.to_datetime) * 24 * 60 * 60).to_i) %></strong>
+        </h5>
+        <h5>Your have been logged in for <strong><%= converted_time(@total_time_worked) %></strong> in total.</h5>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'home#index'
+  resources :users, only: [:new, :create, :index, :show]
+  resources :time_counts, only: [:new, :create, :show]
+
+  get 'workers/track_user', to: 'users#track_user', as: :track_user
+  get 'see_log', to: 'time_counts#see_log', as: :see_log
 end
