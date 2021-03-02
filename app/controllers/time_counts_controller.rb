@@ -1,6 +1,13 @@
 class TimeCountsController < ApplicationController
 
+  before_action :check_session
+
   def new
+    if @is_active
+      @user = User.find_by(tracker_id: session[:tracker_id])
+      @time_count = @user.time_counts.last
+      @total_time_worked = @time_count.user.time_counts.sum(:total_time)
+    end
   end
 
   def create
@@ -11,7 +18,8 @@ class TimeCountsController < ApplicationController
         @time_count.punch_in_time = DateTime.now
         @time_count.active = true
         if @time_count.save
-          redirect_to time_count_path(@time_count), notice: 'Time tracking has been started.'
+          session[:tracker_id] = params[:tracker_id]
+          redirect_to new_time_count_path, notice: 'Time tracking has been started.'
         else
           render :new
         end
@@ -19,7 +27,8 @@ class TimeCountsController < ApplicationController
         @time_count = @user.time_counts.last
         total_time = ((DateTime.now - @time_count.punch_in_time.to_datetime) * 24 * 60 * 60).to_i
         if @time_count.update(punch_out_time: DateTime.now, total_time: total_time, active: false)
-          redirect_to time_count_path(@time_count), notice: 'Time tracking has been ended.'
+          session.delete(:tracker_id)
+          redirect_to new_time_count_path, notice: 'Time tracking has been ended.'
         else
           render :new
         end
@@ -44,4 +53,13 @@ class TimeCountsController < ApplicationController
   def time_count_params
     params.permit(:tracker_id)
   end
+
+  def check_session
+    if session[:tracker_id].present?
+      @is_active = true
+    else
+      @is_active = false
+    end
+  end
+
 end
