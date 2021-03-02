@@ -1,0 +1,41 @@
+<h1>All Workers</h1>
+
+<table class="table table-bordered" id="workers_list_table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Date of Birth</th>
+    <th>ID</th>
+    <th>Total Time</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= full_date(user.date_of_birth) %></td>
+      <td><%= user.tracker_id %></td>
+      <% if user.time_counts.count > 0 %>
+        <td><%= converted_time(user.time_counts.sum(:total_time)) %></td>
+          <% if user.time_counts.last.active %>
+          <td class="active-status">
+            Active
+          </td>
+          <% else %>
+          <td class="inactive-status">
+            Inactive
+          </td>
+          <% end %>
+      <% else %>
+        <td>No Record</td>
+        <td class="inactive-status">Inactive</td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div>
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+</div>
